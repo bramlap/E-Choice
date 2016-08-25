@@ -86,8 +86,8 @@ WSGI_APPLICATION = 'E_Choice.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'e_choice_2',
-        'USER': 'e_choice_2_projectuser',
+        'NAME': 'e_choice',
+        'USER': 'e_choice_projectuser',
         'PASSWORD': '123qweasdzxc',
         'HOST': 'localhost',
         'PORT': '',
