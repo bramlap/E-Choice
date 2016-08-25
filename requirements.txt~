@@ -1,0 +1,12 @@
+## Requirements for E-Choice game
+## !!! Note that these requirements need to be for Python3
+
+python == 3.4
+Django == 1.9
+postgresql >= 9.4
+psycopg2 == 2.6.1
+weasyprint >= 0.3
+numpy >= 1.8.2
+matplotlib.pylab >= 1.8.2
+django-extensions == 1.7.2
+

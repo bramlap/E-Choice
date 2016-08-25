@@ -1,0 +1,113 @@
+{% load staticfiles%} 
+
+<style>
+
+.button_1 {
+    position:absolute;
+    top:{{y_soc_stud}}px;
+    left:{{x_soc_stud}}px;
+/*    width:30px;
+    height:30px*/
+}
+.button_2 {
+    position:absolute;
+    top:{{y_stud_toek}}px;
+    left:{{x_stud_toek}}px;
+/*    width:30px;
+    height:30px;*/
+}
+.button_3 {
+    position:absolute;
+    top:{{y_toek_soc}}px;
+    left:{{x_toek_soc}}px;
+/*    width:30px;
+    height:30px*/
+}
+.button_4 {
+    position:absolute;
+    top:{{y_stud}}px;
+    left:{{x_stud}}px;
+/*    width:30px;
+    height:30px;*/
+}
+.button_5 {
+    position:absolute;
+    top:{{y_toek}}px;
+    left:{{x_toek}}px;
+/*    width:30px;
+    height:30px*/
+}
+.button_6 {
+    position:absolute;
+    top:{{y_soc}}px;
+    left:{{x_soc}}px;
+/*    width:30px;
+    height:30px;*/
+}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel-body">
+				<div id="img_container">
+				    <img src="{% static test %}{{graphic}}" >
+				    <button class="button_1" data-toggle="modal" data-target="#studiesociaalModal"> soc/stud </button>
+				    <button class="button_2" data-toggle="modal" data-target="#studietoekomstModal"> stud/toek </button>
+				    <button class="button_3" data-toggle="modal" data-target="#sociaaltoekomstModal"> toek/soc </button>
+
+				    <button class="button_4" data-toggle="modal" data-target="#studieModal"> stud </button>
+					<button class="button_5" data-toggle="modal" data-target="#toekomstModal"> toek </button>
+				    <button class="button_6" data-toggle="modal" data-target="#sociaalModal"> soc </button>
+
+
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+{% for items in modules %}
+
+<div class="modal fade" id="{{items.gebied}}Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{items.naam}}</h4>
+      </div>
+      <div class="modal-body">
+	<table class="table table-condensed">
+	  <thead><tr>
+	      <th> Omschrijving </th>
+	      <th> Kosten </th>
+	      <th> Baten </th>
+	      <th> Tijdsduur </th>
+	  </tr></thead>
+	  <tbody><tr>
+	      <td> {{ items.omschrijving}} </td>
+	      <td class='danger'> {{ items.kosten }} </td>
+	      <td class='success'> 80{{ items.baten }} </td>
+	      <td> {{ items.tijd }} uur </td>
+	  </tr></tbody>
+	</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+
+	{% if items.gebied == 'studie' %}
+	{% if user.userprofile.exp_{{gebied1}} < 40 %}
+        <button type="button" class="btn btn-primary" disabled>Kopen</button>
+	{% else %}
+	<button type="button" class="btn btn-primary">Kopen</button>
+	{% endif %}
+	{% endif %}
+	
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block head %}
+Wat vind je belangrijk?
+
+<div class="dropdown" style="float: right;     padding-right: 5%;">
+  <button class="dropbtn"> <font size="3"> {{firstname}} {{lastname}}</font> </button>
+  <div class="dropdown-content">
+  	<a href="loggedin">  <font size="2">Home</font> </a>
+    <a href="vragen">  <font size="2">Wijzig focus</font> </a>
+    <a href="#"> <font size="2"> Export PDF </font> </a>
+    <a href="logout"/> <font size="2"> Logout </font> </a>
+  </div>
+</div>
+ 
+{% endblock %}
+
+{% block body %}
+
+<script type="text/javascript">
+var bar, slider;
+function init(){
+	firstname = document.getElementById('id_firstname')
+	firstname.value = "{{firstname}}"
+	lastname = document.getElementById('id_lastname')
+	lastname.value = "{{lastname}}"
+
+	// Stud
+	bar_stud = document.getElementById('bar_stud');
+	slider_stud = document.getElementById('slider_stud');
+
+	bar_stud.addEventListener('mousedown', startSlide_stud, false);	
+	bar_stud.addEventListener('mouseup', stopSlide_stud, false);
+
+	stud_box = document.getElementById('stud_box')
+	stud_box.innerHTML = "{{weging_stud}}%"
+	stud_box.value = "{{weging_stud}}";
+
+	weging_stud = document.getElementById('id_weging_stud')
+	weging_stud.value = stud_box.value
+
+	//Soc
+	bar_soc = document.getElementById('bar_soc');
+	slider_soc = document.getElementById('slider_soc');
+
+	bar_soc.addEventListener('mousedown', startSlide_soc, false);	
+	bar_soc.addEventListener('mouseup', stopSlide_soc, false);
+
+	soc_box = document.getElementById('soc_box')
+	soc_box.innerHTML = "{{weging_soc}}%"
+	soc_box.value = "{{weging_soc}}";
+
+	weging_soc = document.getElementById('id_weging_soc')
+	weging_soc.value = soc_box.value
+
+	//Toek
+	bar_toek = document.getElementById('bar_toek');
+	slider_toek = document.getElementById('slider_toek');
+
+	bar_toek.addEventListener('mousedown', startSlide_toek, false);	
+	bar_toek.addEventListener('mouseup', stopSlide_toek, false);
+
+	toek_box = document.getElementById('toek_box')
+	toek_box.innerHTML = "{{weging_toek}}%"
+	toek_box.value = "{{weging_toek}}";
+
+	weging_toek = document.getElementById('id_weging_toek')
+	weging_toek.value = toek_box.value
+}
+function startSlide_stud(event){
+	var set_perc = ((((event.clientX - bar_stud.offsetLeft) / bar_stud.offsetWidth)).toFixed(2));	
+	bar_stud.addEventListener('mousemove', moveSlide_stud, false);	
+	slider_stud.style.width = (Math.floor(set_perc * 100)) + '%';
+	stud_box.innerHTML = Math.floor(set_perc*100) + '%';	
+	stud_box.value = Math.floor(set_perc * 100);
+	weging_stud.value = stud_box.value
+}
+function moveSlide_stud(event){
+	var set_perc = ((((event.clientX - bar_stud.offsetLeft) / bar_stud.offsetWidth)).toFixed(2));
+	slider_stud.style.width = (Math.floor(set_perc * 100)) + '%';
+	stud_box.innerHTML = Math.floor(set_perc*100) + '%';
+	stud_box.value = Math.floor(set_perc * 100);
+	weging_stud.value = stud_box.value
+}
+function stopSlide_stud(event){
+	var set_perc = ((((event.clientX - bar_stud.offsetLeft) / bar_stud.offsetWidth)).toFixed(2));
+	bar_stud.removeEventListener('mousemove', moveSlide_stud, false);
+	slider_stud.style.width = (Math.floor(set_perc * 100)) + '%';
+	stud_box.innerHTML = Math.floor(set_perc*100) + '%';
+	stud_box.value = Math.floor(set_perc * 100);
+	weging_stud.value = stud_box.value
+}
+// Sociaal
+function startSlide_soc(event){
+	var set_perc = ((((event.clientX - bar_soc.offsetLeft) / bar_soc.offsetWidth)).toFixed(2));	
+	bar_soc.addEventListener('mousemove', moveSlide_soc, false);	
+	slider_soc.style.width = (Math.floor(set_perc * 100)) + '%';
+	soc_box.innerHTML = Math.floor(set_perc*100) + '%';	
+	soc_box.value = Math.floor(set_perc * 100);
+	weging_soc.value = soc_box.value
+}
+function moveSlide_soc(event){
+	var set_perc = ((((event.clientX - bar_soc.offsetLeft) / bar_soc.offsetWidth)).toFixed(2));
+	slider_soc.style.width = (Math.floor(set_perc * 100)) + '%';
+	soc_box.innerHTML = Math.floor(set_perc*100) + '%';
+	soc_box.value = Math.floor(set_perc * 100);
+	weging_soc.value = soc_box.value
+}
+function stopSlide_soc(event){
+	var set_perc = ((((event.clientX - bar_soc.offsetLeft) / bar_soc.offsetWidth)).toFixed(2));
+	bar_soc.removeEventListener('mousemove', moveSlide_soc, false);
+	slider_soc.style.width = (Math.floor(set_perc * 100)) + '%';
+	soc_box.innerHTML = Math.floor(set_perc*100) + '%';
+	soc_box.value = Math.floor(set_perc * 100);
+	weging_soc.value = soc_box.value
+}
+//Toekomst
+function startSlide_toek(event){
+	var set_perc = ((((event.clientX - bar_toek.offsetLeft) / bar_toek.offsetWidth)).toFixed(2));	
+	bar_toek.addEventListener('mousemove', moveSlide_toek, false);	
+	slider_toek.style.width = (Math.floor(set_perc * 100)) + '%';
+	toek_box.innerHTML = Math.floor(set_perc*100) + '%';	
+	toek_box.value = Math.floor(set_perc * 100);
+	weging_toek.value = toek_box.value
+}
+function moveSlide_toek(event){
+	var set_perc = ((((event.clientX - bar_toek.offsetLeft) / bar_toek.offsetWidth)).toFixed(2));
+	slider_toek.style.width = (Math.floor(set_perc * 100)) + '%';
+	toek_box.innerHTML = Math.floor(set_perc*100) + '%';
+	toek_box.value = Math.floor(set_perc * 100);
+	weging_toek.value = toek_box.value
+}
+function stopSlide_toek(event){
+	var set_perc = ((((event.clientX - bar_toek.offsetLeft) / bar_toek.offsetWidth)).toFixed(2));
+	bar_toek.removeEventListener('mousemove', moveSlide_toek, false);
+	slider_toek.style.width = (Math.floor(set_perc * 100)) + '%';
+	toek_box.innerHTML = Math.floor(set_perc*100) + '%';
+	toek_box.value = Math.floor(set_perc * 100);
+	weging_toek.value = toek_box.value
+}
+
+</script>
+
+<body onload='init()'>
+
+<form method="POST" class="post-form">{% csrf_token %}
+
+	<div class="container" style="width:50%">
+		De volgende stap is om te bedenken op welk(e) gebied(en) jij op dit moment wilt oriënteren. <br>
+		Dit doe je door aandachtsgebieden te wegen op de belangrijkheid, middels sliders!<br>
+		<br>
+
+		Studie
+		<div class="progress">
+			<div id='bar_stud' style="position:relative; height:25px; width=50%">
+				<div id='slider_stud' class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:{{weging_stud}}%">
+					<div id='stud_box'> stud_box </div>
+			  </div>
+			</div>
+		</div>
+
+		Toekomst
+		<div class="progress">
+			<div id='bar_toek' style="position:relative; height:25px; width=50%">
+				<div id='slider_toek' class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:{{weging_toek}}%">
+					<div id='toek_box'> toek_box </div>
+			  </div>
+			</div>
+		</div>
+
+		Sociaal
+		<div class="progress">
+			<div id='bar_soc' style="position:relative; height:25px; width=50%">
+				<div id='slider_soc' class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:{{weging_soc}}%">
+					<div id='soc_box'> soc_box </div>
+			  </div>
+			</div>
+		</div>
+	
+	<div style='display:none;'>
+		{{ form_userprofile.as_p }}
+    </div>
+    <button class="btn btn-primary" style="margin-left:40%;" type="submit"> Opslaan </button>
+	</div>
+
+</form>
+
+
+{% endblock %}	

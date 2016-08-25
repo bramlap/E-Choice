@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block head %}
+  Waar sta je nu?
+
+<header id="header">
+<h6> <a href="logout/">logout</a>  </h6>
+</header>  
+<header id="header">
+<h6> {{firstname}} </h6> <br>
+</header>
+ 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+ 
+  // ========================================================== init
+  $("#id_0_answers").val($('input[name=stud1]:checked').val());
+  $("#id_0-question").val($("#qstud1").html());
+  $("#id_0-gebied").val("studie");
+  $("#id_1-answers").val($('input[name=stud2]:checked').val());
+  $("#id_1-question").val($("#qstud2").html());
+  $("#id_1-gebied").val("studie");
+  $("#id_2-answers").val($('input[name=stud3]:checked').val());
+  $("#id_2-question").val($("#qstud3").html());
+  $("#id_2-gebied").val("studie");
+  $("#id_3-answers").val($('input[name=stud4]:checked').val());
+  $("#id_3-question").val($("#qstud4").html());
+  $("#id_3-gebied").val("studie");
+
+  $("#id_4-answers").val($('input[name=toek1]:checked').val());
+  $("#id_4-question").val($("#qtoek1").html());
+  $("#id_4-gebied").val("toekomst");
+  $("#id_5-answers").val($('input[name=toek2]:checked').val());
+  $("#id_5-question").val($("#qtoek2").html());
+  $("#id_5-gebied").val("toekomst");
+  $("#id_6-answers").val($('input[name=toek3]:checked').val());
+  $("#id_6-question").val($("#qtoek3").html());
+  $("#id_6-gebied").val("toekomst");
+  $("#id_7-answers").val($('input[name=toek4]:checked').val());
+  $("#id_7-question").val($("#qtoek4").html());
+  $("#id_7-gebied").val("toekomst");
+
+  $("#id_8-answers").val($('input[name=soc1]:checked').val());
+  $("#id_8-question").val($("#qsoc1").html());
+  $("#id_8-gebied").val("sociaal");
+  $("#id_9-answers").val($('input[name=soc2]:checked').val());
+  $("#id_9-question").val($("#qsoc2").html());
+  $("#id_9-gebied").val("sociaal");
+  $("#id_10-answers").val($('input[name=soc3]:checked').val());
+  $("#id_10-question").val($("#qsoc3").html());
+  $("#id_10-gebied").val("sociaal");
+  $("#id_11-answers").val($('input[name=soc4]:checked').val());
+  $("#id_11-question").val($("#qsoc4").html());
+  $("#id_11-gebied").val("sociaal");
+ 
+  // ============================================================  studie
+  $('input[name=stud1]').click(function() {
+  $("#id_0-answers").val($('input[name=stud1]:checked').val());
+  });
+  
+  $('input[name=stud2]').click(function() {
+  $("#id_1-answers").val($('input[name=stud2]:checked').val());
+  });
+  
+  $('input[name=stud3]').click(function() {
+  $("#id_2-answers").val($('input[name=stud3]:checked').val());
+  });
+  
+  $('input[name=stud4]').click(function() {
+  $("#id_3-answers").val($('input[name=stud4]:checked').val());
+  });
+  
+  // ============================================================  toekomst
+  $('input[name=toek1]').click(function() {
+  $("#id_4-answers").val($('input[name=toek1]:checked').val());
+  });
+  
+  $('input[name=toek2]').click(function() {
+  $("#id_5-answers").val($('input[name=toek2]:checked').val());
+  });
+  
+  $('input[name=toek3]').click(function() {
+  $("#id_6-answers").val($('input[name=toek3]:checked').val());
+  });
+  
+  $('input[name=toek4]').click(function() {
+  $("#id_7-answers").val($('input[name=toek4]:checked').val());
+  });
+  
+  // ============================================================  sociaal
+  $('input[name=soc1]').click(function() {
+  $("#id_8-answers").val($('input[name=soc1]:checked').val());
+  });
+
+  $('input[name=soc2]').click(function() {
+  $("#id_9-answers").val($('input[name=soc2]:checked').val());
+  });
+ 
+  $('input[name=soc3]').click(function() {
+  $("#id_10-answers").val($('input[name=soc3]:checked').val());
+  });
+
+  $('input[name=soc4]').click(function() {
+  $("#id_11-answers").val($('input[name=soc4]:checked').val());
+  });
+
+  }); 
+</script 
+
+
+
+
+{% endblock %}
+
+{% block body %}
+
+
+  <div class="panel panel-default">
+    <div class="panel-body col-md-7 col-md-offset-2">
+      <div class="table-responsive">
+	{% for items in stud_lijst %}
+	{% if forloop.first %}
+	<table class="table table-hover">
+	  <thead>
+	    <tr>
+	      
+	      <th class="warning">Studie </th>
+	      <th> Ja </th>
+	      <th> Nee </th>
+	      <th> Weet niet </th>
+	      
+	    </tr>
+	  </thead>
+	  {% endif %}
+	  <tbody>
+	    <tr>
+	      <td class="warning col-md-9" id="qstud{{forloop.counter}}"> {{ items.question }} </td>
+	      <div class="col-md-2">
+			
+		{% if items.answers == "Ja" %}
+		<td> <input type="radio" name="stud{{forloop.counter}}"  id="stud{{forloop.counter}}" value="Ja" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="stud{{forloop.counter}}"  id="stud{{forloop.counter}}" value="Ja"> </td>
+		{% endif %}
+		{% if items.answers == "Nee" %}
+		<td> <input type="radio" name="stud{{forloop.counter}}"  id="stud{{forloop.counter}}" value="Nee" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="stud{{forloop.counter}}"  id="stud{{forloop.counter}}" value="Nee"> </td>
+		{% endif %}
+		{% if items.answers == "WN" %}
+		<td> <input type="radio" name="stud{{forloop.counter}}"  id="stud{{forloop.counter}}" value="WN" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="stud{{forloop.counter}}"  id="stud{{forloop.counter}}" value="WN"> </td>
+		{% endif %}
+		
+	      </div>
+	    </tr>
+	  </tbody>
+	  {% endfor %}
+	</table>
+      </div>
+    </div>
+  
+
+    <div class="panel-body col-md-7 col-md-offset-2">
+      <div class="table-responsive">
+	{% for items in toek_lijst %}
+	{% if forloop.first %}
+	<table class="table table-hover">
+	  <thead>
+	    <tr>
+	      
+	      <th class="info">Sociaal </th>
+	      <th> Ja </th>
+	      <th> Nee </th>
+	      <th> Weet niet </th>
+	      
+	    </tr>
+	  </thead>
+	  {% endif %}
+	  <tbody>
+	    <tr>
+	      <td class="info col-md-9" id="qtoek{{forloop.counter}}"> {{ items.question }} </td>
+	      <div class="col-md-2">
+		
+		{% if items.answers == "Ja" %}
+		<td> <input type="radio" name="toek{{forloop.counter}}"  id="toek{{forloop.counter}}" value="Ja" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="toek{{forloop.counter}}"  id="toek{{forloop.counter}}" value="Ja"> </td>
+		{% endif %}
+		{% if items.answers == "Nee" %}
+		<td> <input type="radio" name="toek{{forloop.counter}}"  id="toek{{forloop.counter}}" value="Nee" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="toek{{forloop.counter}}"  id="toek{{forloop.counter}}" value="Nee"> </td>
+		{% endif %}
+		{% if items.answers == "WN" %}
+		<td> <input type="radio" name="toek{{forloop.counter}}"  id="toek{{forloop.counter}}" value="WN" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="toek{{forloop.counter}}"  id="toek{{forloop.counter}}" value="WN"> </td>
+		{% endif %}
+		
+	      </div>
+	    </tr>
+	  </tbody>
+	  {% endfor %}
+	</table>
+      </div>
+    </div>
+    
+    
+    <div class="panel-body col-md-7 col-md-offset-2">
+      <div class="table-responsive">
+	{% for items in soc_lijst %}
+	{% if forloop.first %}
+	<table class="table table-hover">
+	  <thead>
+	    <tr>
+	      
+	      <th class="danger">Sociaal </th>
+	      <th> Ja </th>
+	      <th> Nee </th>
+	  <th> Weet niet </th>
+	  
+	    </tr>
+	  </thead>
+	  {% endif %}
+	  <tbody>
+	    <tr>
+	      <td class="danger col-md-9" id="qsoc{{forloop.counter}}"> {{ items.question }} </td>
+	      <div class="col-md-2">
+		
+		{% if items.answers == "Ja" %}
+		<td> <input type="radio" name="soc{{forloop.counter}}"  id="soc{{forloop.counter}}" value="Ja" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="soc{{forloop.counter}}"  id="soc{{forloop.counter}}" value="Ja"> </td>
+		{% endif %}
+		{% if items.answers == "Nee" %}
+
+		<td> <input type="radio" name="soc{{forloop.counter}}"  id="soc{{forloop.counter}}" value="Nee" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="soc{{forloop.counter}}"  id="soc{{forloop.counter}}" value="Nee"> </td>
+		{% endif %}
+		{% if items.answers == "WN" %}
+		<td> <input type="radio" name="soc{{forloop.counter}}"  id="soc{{forloop.counter}}" value="WN" checked> </td>
+		{% else %}
+		<td> <input type="radio" name="soc{{forloop.counter}}"  id="soc{{forloop.counter}}" value="WN"> </td>
+		{% endif %}
+		
+	      </div>
+	    </tr>
+	  </tbody>
+	  {% endfor %}
+	</table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<form method="POST" class="post-form">{% csrf_token %}
+  <div class= "col-md-offset-5 col-md-4">
+    <div style='display:none;'>
+      {{ qform0.as_p }}
+      {{ qform1.as_p }}
+      {{ qform2.as_p }}
+      {{ qform3.as_p }}
+      
+      {{ qform4.as_p }}
+      {{ qform5.as_p }}
+      {{ qform6.as_p }}
+      {{ qform7.as_p }}
+    
+      {{ qform8.as_p }}
+      {{ qform9.as_p }}
+      {{ qform10.as_p }}
+      {{ qform11.as_p }}
+    </div>
+    <button class="btn btn-primary" type="submit"> Submit </button>
+  </div>
+</form>
+
+
+
+
+{% endblock %}	

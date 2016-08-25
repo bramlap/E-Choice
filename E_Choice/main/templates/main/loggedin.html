@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block head %}
+  Module Scherm 
+
+<div class="dropdown" style="float: right;     padding-right: 5%;">
+  <button class="dropbtn"> <font size="3"> {{firstname}} {{lastname}}</font> </button>
+  <div class="dropdown-content">
+  	<a href="main/loggedin">  <font size="2">Home</font> </a>
+    <a href="vragen">  <font size="2">Wijzig focus</font> </a>
+    <a href="pdf_export"> <font size="2"> Export PDF </font> </a>
+    <a href="logout"/> <font size="2"> Logout </font> </a>
+  </div>
+</div>
+ 
+<style>
+.button_red {
+    color: red;
+}
+.button_green {
+    color: green;
+}
+#outer {
+	position:relative;
+/*    border: 4px solid blue;
+*/    text-align: center;
+    width:auto;
+    height:auto;
+    display:inline-block;
+    max-height:100%;
+}
+
+</style>
+
+<script>
+$( document ).ready(function() {
+    var heights = $(".well").map(function() {
+        return $(this).height();
+    }).get(),
+
+    maxHeight = Math.max.apply(null, heights);
+
+    $(".well").height(maxHeight);
+});
+
+
+</script>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="col-md-6">
+<div class="panel panel-default">
+	<div class="panel-heading">
+    	<h3 class="panel-title">
+    		<div class="tooltip_modules">Modules 
+  				<span class="tooltiptext_modules"> 
+  					Hieronder staan de modules voor de aandachtsgebieden weer gegeven. <br>
+  					<br>
+  					Beweeg je muis over de witte icoontjes om meer te weten te komen over de modules!
+  				</span>
+			</div> 
+    	</h3>
+  	</div>
+  	
+  	<div class="panel-body img-responsive well" style="text-align: center;">
+
+		{% include "main/Piechart.html" %}
+
+	</div>
+</div>
+</div>
+
+<div class="col-md-6 ">
+<div class="panel panel-default ">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+    	    <div class="tooltip_voortgang">Voortgang 
+  				<span class="tooltiptext_voortgang"> 
+  					Dit panel laat jouw voortgang zien. <br>
+  					<br>
+  					Experience: <br>
+  				</span>
+			</div> 
+    	</h3>
+
+  	</div>
+  	<div class="panel-body well">
+
+		<!-- <div class="well" style="background:none; border:none" id="item2"> -->
+
+	    	<div class="panel panel-default">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">Experience</h3>
+		  		</div>
+				<div class="panel-body">
+			    	{% include "main/experience.html" %}
+			  	</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">Bank</h3>
+		  		</div>
+				<div class="panel-body">
+
+					{% include "main/bank.html" %} 
+			  	
+			  	 </div>
+			</div>
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">Agenda</h3>
+		  		</div>
+				<div class="panel-body">
+				Basic panel example
+			  	</div>
+			</div>
+
+		<!-- </div> -->
+	</div>
+</div> 
+</div>
+
+
+
+
+
+{% endblock %}	

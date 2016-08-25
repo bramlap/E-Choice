@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block head %}
+Docent pagina
+
+<!-- <div align="right" style="font-size=10px"> {{firstname}} <a href="logout/">logout</a> </div> -->
+
+<div class="dropdown" style="float: right; padding-right: 5%;">
+  <button class="dropbtn"> <font size="3"> {{teacher.firstname}} </font> </button>
+  <div class="dropdown-content">
+    <a href="logout"/> <font size="2"> Logout </font> </a>
+  </div>
+</div>
+ 
+{% endblock %}
+
+{% block body %}
+
+<form method="POST" class="post-form">{% csrf_token %}
+<div class="col-md-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">Zoek</h3>
+	  	</div>
+	  	<div class="panel-body ">
+	  		Voornaam:<br>
+	  		{{form_userprofile.firstname}} <br>
+	  		Achternaam: <br>
+	  		{{form_userprofile.lastname}} <br>
+	  		<br> 
+	  		<br>
+	  		<button class="btn btn-primary" type="submit"> Zoeken </button> 
+
+	  		{%if error == "True"%}
+	  		<br>
+	  		<br>
+	  		<div style="color:red"> {{message_not_found}} </div>
+	  		{% endif %}
+
+	  		{%if message_found == "True"%}
+	  		<br>
+	  		<br>
+	  		<div style="color:green"> Succesvolle zoekactie! </div>
+	  		{% endif %}
+	    	
+		</div>
+	</div>
+</div>
+<!-- </form>
+
+<form method="POST" class="post-form">{% csrf_token %} -->
+<div class="col-md-9">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">
+	    		Resultaten 
+	    		{%if message_found == "True"%} 
+	    		voor: {{firstname}} {{lastname}}
+	    		{% endif %}
+	    	</h3>
+	  	</div>
+	  	<div class="panel-body ">
+
+
+	  	{%if message_found == "True"%}		
+
+	  		<div class="row-md-4" >
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+				    	<h3 class="panel-title">Module status: "Bezig" </h3>
+				  	</div>
+				  	<div class="panel-body " >
+
+				  		{% for item in modules_user_pending %}
+					  		<div class="col-md-4">
+								<div class="panel panel-default" >
+									<div class="panel-heading">
+								    	<h3 class="panel-title">{{item.naam}}</h3>
+								  	</div>
+								  	<div class="panel-body " >
+
+										<table class="table table-striped table-condensed" >
+											<tbody>
+												<tr class="table">
+												<td> Gebied</td>
+												<td> {{item.gebied}}  </td>
+												</tr>
+												<tr class="table">
+												<td> Type (Actief/Passief) </td>
+												<td> {{item.module_type}} </td>
+												</tr>
+												<tr class="table">
+												<td> Duur (uren) </td>
+												<td> {{item.tijd}} </td>
+												</tr>
+												<tr class="table">
+												<td> Niveau </td>
+												<td> {{item.niveau}} </td>
+												</tr>
+												<tr class="table">
+												<td> Cijfer <br> <br> </td>
+
+												{% if item.module_type == "Actief"  %}
+												<!-- <td> {% cycle form_modules0 form_modules1 form_modules2.cijfer form_modules3.cijfer form_modules4.cijfer form_modules5.cijfer %} </td> -->
+	<!-- 											<td> {% cycle form_modules0.cijfer form_modules1.cijfer form_modules2.cijfer form_modules3.cijfer form_modules4.cijfer form_modules5.cijfer %} </td> -->
+												<td> {% cycle form_modules_actief0.cijfer form_modules_actief1.cijfer form_modules_actief2.cijfer form_modules_actief3.cijfer form_modules_actief4.cijfer form_modules_actief5.cijfer %} </td>
+
+												{% else %}
+												<td> - <br> </td>
+
+												{% endif %}
+
+												</tr>
+											</tbody>
+										</table>
+
+										{% if item.module_type == 'Actief'  %}
+											<!-- <div style='display:none;'> -->
+												<td> {% cycle form_modules0.save_module form_modules1.save_module form_modules2.save_module form_modules3.save_module form_modules4.save_module form_modules5.save_module %} </td>
+											<!-- </div> -->
+											<button class="btn btn-success" type="submit" name="{{item.id_module}}"> Cijfer opslaan </button>
+										{% endif %}
+										{% if item.module_type == 'Passief' %}
+<!-- 											<div style='display:none;'>
+												<td> {% cycle form_modules0.save_module form_modules1.save_module form_modules2.save_module form_modules3.save_module form_modules4.save_module form_modules5.save_module %} </td>
+											</div> -->
+											<button class="btn btn-success" type="submit" name="{{item.id_module}}"> Bevestig uitvoering <br>  </button>
+										{% endif %}
+										
+								  	</div>
+								</div>
+							</div>
+
+				  		{% endfor %}
+				    	
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row-md-4">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+				    	<h3 class="panel-title">Module status: "Voltooid"</h3>
+				  	</div>
+				  	<div class="panel-body ">
+
+				  		{% for item in modules_user_complete%}
+
+
+				  		<div class="col-md-4">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+							    	<h3 class="panel-title">{{item.naam}}</h3>
+							  	</div>
+							  	<div class="panel-body ">
+
+						            <div class="panel-body">
+										<table class="table table-striped table-condensed">
+											<tbody>
+												<tr class="table">
+												<td> Gebied</td>
+												<td> {{item.gebied}}  </td>
+												</tr>
+												<tr class="table">
+												<td> Type (Actief/Passief) </td>
+												<td> {{item.module_type}} </td>
+												</tr>
+												<tr class="table">
+												<td> Duur (uren) </td>
+												<td> {{item.tijd}} </td>
+												</tr>
+												<tr class="table">
+												<td> Niveau </td>
+												<td> {{item.niveau}} </td>
+												</tr>
+												<tr class="table">
+												<td> Cijfer </td>
+												<td> {{item.cijfer}} </td>
+												</tr>
+											</tbody>
+										</table>
+						            </div>
+
+							  	</div>
+							</div>
+						</div>
+
+				  		{% endfor %}
+				    	
+					</div>
+				</div>
+			</div>
+		{% endif %}	
+
+
+
+
+
+
+<!-- 	  		{% for item in modules_user%}
+
+	  		<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+				    	<h3 class="panel-title">{{item.naam}}</h3>
+				  	</div>
+				  	<div class="panel-body ">
+
+			            <div class="panel-body">
+							<table class="table table-striped table-condensed">
+								<tbody>
+									<tr class="table">
+									<td> Gebied</td>
+									<td> {{item.gebied}}  </td>
+									</tr>
+									<tr class="table">
+									<td> Type (Actief/Passief) </td>
+									<td> {{item.module_type}} </td>
+									</tr>
+									<tr class="table">
+									<td> Duur (uren) </td>
+									<td> {{item.tijd}} </td>
+									</tr>
+									<tr class="table">
+									<td> Niveau </td>
+									<td> {{item.niveau}} </td>
+									</tr>
+									<tr class="table">
+									<td> Cijfer </td>
+
+									{% if item.cijfer != 0  %}
+									<td> {{item.cijfer}} </td>
+
+									{% else %}
+									<td> {% cycle form_modules0.cijfer form_modules1.cijfer form_modules2.cijfer form_modules3.cijfer form_modules4.cijfer form_modules5.cijfer %} </td>
+									{% endif %}
+<td> {% cycle form_modules0.as_p form_modules1.as_p form_modules2.as_p form_modules3.as_p form_modules4.as_p form_modules5.as_p %} </td>
+
+									</tr>
+								</tbody>
+							</table>
+			            </div>
+
+				  	</div>
+				</div>
+			</div>
+	  		{% endfor %}
+	    	
+		</div>
+	</div>
+</div> -->
+
+</form>
+
+
+
+
+
+{% endblock %}	

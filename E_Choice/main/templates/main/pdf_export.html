@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% if pdf_export_selector == 'True' %}
+Pdf export: {{firstname}} {{lastname}}
+
+
+{% else %}
+Pdf export: {{firstname}} {{lastname}}
+
+<div class="dropdown" style="float: right;     padding-right: 5%;">
+  <button class="dropbtn"> <font size="3"> {{user.firstname}} {{user.lastname}}</font> </button>
+  <div class="dropdown-content">
+    <a href="loggedin">  <font size="2">Home</font> </a>
+    <a href="vragen">  <font size="2">Wijzig focus</font> </a>
+    <a href=""> <font size="2"> Export PDF </font> </a>
+    <a href="logout"/> <font size="2"> Logout </font> </a>
+  </div>
+</div> 
+{% endif %}
+
+ 
+{% endblock %}
+
+{% block body %}
+
+<!-- data_request : {{data_request}} -->
+<div class="col-md-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">Gegevens Scholier</h3>
+	  	</div>
+	  	<div class="panel-body">
+			<table class="table table-striped table-condensed">
+				<tbody>
+					<tr class="table">
+					<td> Naam</td>
+					<td> {{firstname}}  </td>
+					</tr>
+					<tr class="table">
+					<td> Achternaam  </td>
+					<td> {{lastname}} </td>
+					</tr>
+					<tr class="table">
+					<td> E-mail </td>
+					<td> {{item.tijd}} </td>
+					</tr>
+					<tr class="table">
+					<td> Experience totaal </td>
+					<td> {{user.exp_tot}} </td>
+					</tr>
+					<tr class="table">
+					<td> Experience Studie </td>
+					<td> {{user.exp_stud}} </td>
+					</tr>
+					<tr class="table">
+					<td> Experience Toekomst </td>
+					<td> {{user.exp_toek}} </td>
+					</tr>
+					<tr class="table">
+					<td> Experience Sociaal </td>
+					<td> {{user.exp_soc}} </td>
+					</tr>
+				</tbody>
+			</table>
+			<form method="POST" class="post-form">{% csrf_token %}
+				<div style='display:none;'>
+					{{ form_pdf_export.as_p }}
+			    </div>
+			    <button class="btn btn-{{success}}" type="submit"> Export PDF </button>
+				</div>
+			</form>
+		</div>
+	</div> 
+</div>
+
+<div class="col-md-8">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">Welke modules gedaan?</h3>
+	  	</div>
+	  	<div class="panel-body ">
+
+	  		{% for item in modules_user %}
+	  			{%if item.status == 'Voltooid' %}
+			  		<div class="col-md-4">
+						<div class="panel panel-success">
+							<div class="panel-heading">
+						    	<h3 class="panel-title">{{item.naam}}</h3>
+						  	</div>
+						  	<div class="panel-body ">
+
+					            <div class="panel-body">
+									<table class="table table-striped table-condensed">
+										<tbody>
+											<tr class="table">
+											<td> Gebied</td>
+											<td> {{item.gebied}}  </td>
+											</tr>
+											<tr class="table">
+											<td> Type  </td>
+											<td> {{item.module_type}} </td>
+											</tr>
+											<tr class="table">
+											<td> Duur (uren) </td>
+											<td> {{item.tijd}} </td>
+											</tr>
+											<tr class="table">
+											<td> Niveau </td>
+											<td> {{item.niveau}} </td>
+											</tr>
+											<tr class="table">
+											<td> Cijfer </td>
+											<td> {{item.cijfer}} </td>
+											</tr>
+										</tbody>
+									</table>
+					            </div>
+
+						  	</div>
+						</div>
+					</div>
+		  		{% endif %}
+	  		{% endfor %}
+
+		</div>
+	</div>
+</div>
+
+
+
+
+{% endblock %}	

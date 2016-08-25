@@ -1,0 +1,52 @@
+{% block content %}
+<!-- 	Totaal: {{ user.userprofile.exptotaal}}  <br>
+	Studie: {{ user.userprofile.expstudie}} <br>
+	Sociaal: {{ user.userprofile.expsociaal}} <br>
+	Werk: {{ user.userprofile.exptoekomst}}	 <br> -->
+
+<style>
+.percent {
+	position:relative;
+	float: right;
+	padding-top: -10px;
+}
+</style>
+
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+<h6>Studie </h6>
+<div class="percent"> 1000</div>
+	<div class="progress">
+  		<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+  		aria-valuemin="0" aria-valuemax="100" style="color:black; width:{{ exp_user_stud_norm }}%"> {{ user.exp_stud }} 
+  		</div>
+	</div>
+
+<h6>Sociaal </h6>
+<div class="percent"> 1000</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60"
+  aria-valuemin="0" aria-valuemax="100" style="color:black; width:{{ exp_user_soc_norm}}%"> {{ user.exp_soc }} 
+  </div>
+</div>
+
+<h6>Werk </h6>
+<div class="percent"> 1000</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60"
+  aria-valuemin="0" aria-valuemax="100" style="color:black; width:{{ exp_user_toek_norm }}%"> {{ user.exp_toek }} 
+  </div>
+</div>
+
+<h6>Totaal </h6>
+<div class="percent"> 1000</div>
+<div class="progress">
+	<div class="progress-bar progress-bar-warning" role="progressbar" style="color:black; width:{{ exp_user_stud_norm }}%"> {{ user.exp_stud }}
+	</div>
+	<div class="progress-bar progress-bar-danger" role="progressbar" style="color:black; width:{{exp_user_soc_norm }}%"> {{ user.exp_soc }}
+	</div>
+	<div class="progress-bar progress-bar-info" role="progressbar" style="color:black; width:{{ exp_user_toek_norm }}%"> {{ user.exp_toek }}
+	</div>
+</div>
+
+{% endblock %}

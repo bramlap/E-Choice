@@ -1,0 +1,86 @@
+{% block content %}
+
+<style>
+
+</style>
+
+<div class="panel-body">
+	<div class="table-responsive"> 
+		<table class="table table-hover table-striped table-condensed">
+			
+			<thead>
+				<tr>
+				<th>Module</th>
+				<th>Type </th>
+				<th>Kosten</th>
+				<th>Baten vast </th>
+				<th>Baten flex.</th>
+				<th>Baten flex. est.*</th>
+				<th>Status </th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for items in modules%}
+					{% if items.status == 'Bezig' %}
+						<tr class="table">
+						<td class="warning" style ="word-break:break-all;"> {{items.naam}} </td>
+						<td  class="warning"style ="word-break:break-all;"> {{items.module_type}} </td>
+						<td class="warning" style ="word-break:break-all;" > <div style="color:red">{{ items.kosten }} </div> </td>
+						<td class="warning" style ="word-break:break-all;"> <div style="color:green">{{ items.baten_vast }} </div> </td>
+						<td class="warning" style ="word-break:break-all;"> - </td>
+							
+						<td class="warning" style ="word-break:break-all;"> <div style="color:green">{% cycle baten_flex_bezig.0 baten_flex_bezig.1 baten_flex_bezig.2 baten_flex_bezig.3 baten_flex_bezig.4 baten_flex_bezig.5 %}</div> </td>
+						<td class="warning"> {{ items.status }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+
+				{% for items in modules%}
+					{% if items.status == 'Voltooid' %}
+						<tr class="table">
+							<td  class="success" style ="word-break:break-all;"> {{items.naam}} </td>
+							<td class="success" style ="word-break:break-all;"> {{items.module_type}} </td>
+							<td class="success" style ="word-break:break-all;" > <div style="color:red">{{ items.kosten }} </div> </td>
+							<td class="success" style ="word-break:break-all;"> <div style="color:green">{{ items.baten_vast }} </div> </td>
+							<td class="success" style ="word-break:break-all;"> <div style="color:green">
+									{% cycle baten_flex_voltooid.0 baten_flex_voltooid.1 baten_flex_voltooid.2 baten_flex_voltooid.3 baten_flex_voltooid.4 baten_flex_voltooid.5 %}  </div>  </td>
+							<td class="success" style ="word-break:break-all;"> - </td>
+							<td class="success"> {{ items.status }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+					<tr class="table">
+						<td style ="word-break:break-all;"> Totaal </td>
+						<td style ="word-break:break-all;"> 		</td>
+						<td style ="word-break:break-all;"> <div style="color:red">{{kosten_totaal}} </div> </td>
+						<td style ="word-break:break-all;"> <div style="color:green">{{baten_totaal }} </div> </td>
+						<td style ="word-break:break-all;">  </td>
+						<td> </td>
+						<td> </td>
+					</tr>
+					<tr class="table">
+						<td style ="word-break:break-all;"> Balans </td>
+						<td style ="word-break:break-all;"> 		</td>
+						<td style ="word-break:break-all;" >  
+							{% if bank > 0 %}
+								<div style="color:green">{{bank}} </div>
+							{% elif user.bank == 0 %}
+								{{bank}}
+							{% elif bank < 0 %}
+								<div style="color:red">{{bank}} </div>
+							{% endif %}
+						</td>
+						<td style ="word-break:break-all;"> </td>
+						<td style ="word-break:break-all;">  </td>
+						<td> </td>
+						<td> </td>
+					</tr>
+			</tbody>
+			
+		</table>
+		* = berekend door: (factor module) x cijfer, waarbij het cijfer een 7.5 is
+
+	</div>
+</div>
+
+{% endblock %}

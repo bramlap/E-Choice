@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+Geen Toegang
+
+<!-- <div align="right" style="font-size=10px"> {{firstname}} <a href="logout/">logout</a> </div> -->
+
+<!-- <div class="dropdown" style="float: right;     padding-right: 5%;">
+  <button class="dropbtn"> <font size="3"> {{teacher.firstname}} </font> </button>
+  <div class="dropdown-content">
+    <a href="logout"/> <font size="2"> Logout </font> </a>
+  </div>
+</div> -->
+ 
+{% endblock %}
+
+{% block body %}
+
+	{% if Gebruiker.is_student %}
+
+	Klik <a href="/loggedin">hier</a> om terug te gaan naar de home pagina
+
+	{% elif Gebruiker.is_teacher %}
+
+	Klik <a href="/docent">hier</a> om terug te gaan naar de home pagina
+
+	{% endif %}
+
+{% endblock %}	

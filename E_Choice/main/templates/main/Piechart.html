@@ -1,0 +1,326 @@
+<div id="outer">
+
+    {% load staticfiles%} 
+        <img src="/static/main/user_piecharts/{{user}}.png?cachebuster={{uuid}" class="img-responsive" style="display:inline-block; width:auto; height:auto; max-width:100%; max-height:100%;"> 
+
+        <div style="position:absolute; left:{{x_toek_label}}%; top:{{y_toek_label}}%">
+            Toekomst
+        </div>
+
+    {% if user.weging_stud != 0 %}
+
+        {% if weging_stud_norm < 7%}
+            <button class="button_1_2" data-toggle="modal" data-target="#opendagModal" style="position:absolute; left:{{x_stud1}}%; top:{{y_stud1}}%;">
+                <img class="image_stud1_2" src="/static/main/area_images/study_image.jpg" style="width:100%; height:100%; top:0; left:0; position:absolute"> 
+            <!-- opendag -->
+            </button>
+
+            <button class="button_2_2" data-toggle="modal" data-target="#webklasModal" style="position:absolute; left:{{x_stud2}}%; top:{{y_stud2}}%"> 
+                <img class="image_stud2_2" src="/static/main/area_images/study_image.jpg" style="width:100%; height:100%; top:0; left:0; position:absolute"> 
+            <!-- Webklas  -->
+            </button>
+
+        {% else %}
+            <button class="button_1" data-toggle="modal" data-target="#opendagModal" style="position:absolute; left:{{x_stud1}}%; top:{{y_stud1}}%; ">
+                <img class="image_stud1" src="/static/main/area_images/study_image.jpg" style="width:100%; height:100%; top:0; left:0; position:absolute"> 
+            <!-- opendag -->
+            </button>
+
+            <button class="button_2" data-toggle="modal" data-target="#webklasModal" style="position:absolute; left:{{x_stud2}}%; top:{{y_stud2}}%"> 
+                <img class="image_stud2" src="/static/main/area_images/study_image.jpg" style="width:100%; height:100%; top:0; left:0; position:absolute"> 
+            <!-- Webklas  -->
+            </button>
+
+        {% endif %}
+
+
+        {% if user.weging_soc != 0 %}
+            <button class="button_3" data-toggle="modal" data-target="#dag_studentModal" style="position:absolute; left:{{x_soc_stud}}%; top:{{y_soc_stud}}%; "> 
+                <img class="bottom_stud_soc" src="/static/main/area_images/study_image.jpg" style="position:absolute; width:100%; height:100%;"/>
+                <img class="top_stud_soc" src="/static/main/area_images/working_man.png" style="position:absolute; width:100%; height:100%;" />
+            </button>
+        <!-- Dag student  -->
+        {% endif %}
+
+    {% endif %}
+
+
+    {% if user.weging_toek != 0 %}
+
+        {% if weging_toek_norm < 5%}
+            <button class="button_5_2" data-toggle="modal" data-target="#caseModal" style="position:absolute; left:{{x_toek}}%; top:{{y_toek}}%;" > 
+                <img src="/static/main/area_images/working_man.png" class="img-responsive" style="display:inline-block; width:auto; height:auto; max-width:100%; max-height:100%;"> 
+            </button>
+
+        {% else %}
+            <button class="button_5" data-toggle="modal" data-target="#caseModal" style="position:absolute; left:{{x_toek}}%; top:{{y_toek}}%"> 
+                <img class="image_toek" src="/static/main/area_images/working_man.png" style="width:100%; height:100%%; top:0; left:0; position:absolute"> 
+            </button>
+
+        {% endif %}
+
+        {% if user.weging_soc != 0 %}
+            <button class="button_4" data-toggle="modal" data-target="#excursieModal" style="position:absolute; left:{{x_toek_soc}}%; top:{{y_toek_soc}}%"> 
+                <img class="bottom_toek_soc" src="/static/main/area_images/working_man.png" style="position:absolute; width:100%; height:100%; "/>
+                <img class="top_toek_soc" src="/static/main/area_images/wine3.png" style="position:absolute; width:100%; height:100%;" />
+            </button>
+        {% endif %}
+
+    {% endif %}
+
+    {% if user.weging_soc != 0 %}
+        <button class="button_6" data-toggle="modal" data-target="#borrelModal" style="position:absolute; left:{{x_soc}}%; top:{{y_soc}}%"> 
+            <img class="image_soc" src="/static/main/area_images/wine3.png" style="width:100%; height:100%; top:0; left:0; position:absolute; "> 
+        </button>
+    {% endif %}
+
+</div>
+
+
+{% for items in modules %}
+    <div class="modal fade" style="text-align:left" id="{{items.id_module}}Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <form class="post-form" method="POST">
+            <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+
+                        <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"> {{items.naam}} </h4>
+                        </div>  
+
+                      <div class="modal-body">
+                        Omschrijving: <br>
+                        {{items.omschrijving}}
+
+                        <br>
+                        <br>
+
+                            <table class="table table-condensed">
+                                <thead><tr>
+                                    <!-- <th> Omschrijving <br> <br> </th> -->
+                                    <th> Kosten  </th>
+                                    <th> Baten  (vast) </th>
+                                    {% if items.module_type == 'Actief' %}
+                                    <th> Baten  (Flexibel) </th>
+                                    {% endif %}
+                                    <th> Tijdsduur  </th>
+                                </tr></thead>
+                                <tbody><tr>
+                                    <!-- <td> {{ items.omschrijving}} </td> -->
+                                    <td class='danger'> {{ items.kosten }} </td>
+                                    <td class='success'> {{ items.baten_vast }} </td>
+                                    {% if items.module_type == 'Actief' %}
+                                    <td> (behaalde cijfer voor module) * {{items.factor}} </td>
+                                    {% endif %}
+                                    <td> {{ items.tijd }} uur </td>
+                                </tr></tbody>
+                            </table>
+
+
+                            <div style='display:none;'>
+                                {% csrf_token %}
+                                {% cycle buy_0.as_p buy_1.as_p buy_2.as_p buy_3.as_p buy_4.as_p buy_5.as_p %} 
+                            </div>
+
+                           
+                      </div>
+                      <div class="modal-footer">
+
+<!--                         {% if items.buy_module == 1 or items.status == 'Bezig' %}
+                            <div style="color:red"> Module al gekocht! </div>
+                            <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                        {% endif %} -->
+
+
+                        {% if items.status == 'Bezig' %}
+                            <div style="color:orange"> Met module bezig! </div>
+                            <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                            <!-- <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button> -->
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                        {% endif %}
+
+                        {% if items.status == 'Voltooid' %}
+                            <div style="color:red"> Module al voltooid! </div>
+                            <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                        {% endif %}
+
+
+                        {% if items.status == 'Niet gedaan' %}
+                            {% if items.niveau == 2 and bank >= items.kosten %}
+
+                                {% if items.gebied == 'studie' %}
+
+                                    {% if user.exp_stud >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% elif user.exp_stud < items.exp_required %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'studietoekomst' %}
+
+                                    {% if user.exp_stud >= items.exp_required or user.exp_toek >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% else %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'toekomst' %}
+
+                                    {% if user.exp_toek >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% elif user.exp_toek < items.exp_required %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'sociaaltoekomst' %}
+
+                                    {% if user.exp_soc >= items.exp_required or user.exp_toek >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% else %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'sociaal' %}
+
+                                    {% if user.exp_studie >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% elif user.exp_studie < items.exp_required %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type=" submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'studiesociaal' %}
+
+                                    {% if user.exp_stud >= items.exp_required or user.exp_soc >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% else %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                            {% elif items.niveau == 1 and bank >= items.kosten %}
+
+                                {% if items.gebied == 'studie' %}
+
+                                    {% if user.exp_stud >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% elif user.exp_stud < items.exp_required %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'studietoekomst' %}
+
+                                    {% if user.exp_stud >= items.exp_required or user.exp_toek >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% else %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'toekomst' %}
+
+                                    {% if user.exp_toek >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" value="Sluiten" > </button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% elif user.exp_toek < items.exp_required %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'sociaaltoekomst' %}
+
+                                    {% if user.exp_soc >= items.exp_required or user.exp_toek >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% else %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'sociaal' %}
+
+                                    {% if user.exp_soc >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% elif user.exp_soc < items.exp_required %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                                {% if items.gebied == 'studiesociaal' %}
+
+                                    {% if user.exp_stud >= items.exp_required or user.exp_soc >= items.exp_required %}
+                                        <input class="btn btn-success" type="submit" value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% else %}
+                                        <div style="color:red"> Niet genoeg experience! </div>
+                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                                    {% endif %}
+
+                                {% endif %}
+
+                            {% else %}
+                                <div style="color:red"> Niet genoeg geld! </div>
+                                <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
+                            {% endif %}
+                        {% endif %}
+
+                      </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endfor %}

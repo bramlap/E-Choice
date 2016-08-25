@@ -1,0 +1,21 @@
+/*@import url('bootstrap.min.css');*/
+@import url('bootstrap-theme.min.css');
+@import url('w3.css');
+
+
+.page-header {
+    background-color: #0099CC ;
+    text-align: center;
+}
+
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: white ;
+}
+
+
+/* Header of the main page*/
+/*#header {
+    float: right;
+    width:5%;
+}*/

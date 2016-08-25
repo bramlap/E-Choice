@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+ Login Scherm
+{% endblock %}
+
+{% block body %}
+
+
+  {% if form.errors %}
+    <p class="error">Sorry thats not a valid username or password </p>
+  {% endif %}
+
+   <form class="form-horizontal" action="/auth" method="post">{% csrf_token %}
+
+	{% if error_value != '' %}
+	<div class="form-group">
+		<div id="login_alert" class="alert alert-danger alert dismissible col-md-offset-5 col-md-2" role="alert">
+		  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		  <span class="sr-only">Error:</span>
+	 	 	{{error_value}}
+		  </div> 
+	</div>
+	{% endif %}
+    	
+	<div class="form-group">
+   		<label for="username" class="col-md-5 control-label">Username:</label>
+		<div class="col-md-2">
+   			<input type="text" class="form-control"  id="username" placeholder="username" name="username">
+		</div>	
+	</div> 
+
+   	<div class="form-group"> 
+   		<label for="password" class="col-md-5 control-label">Password:</label>
+		<div class="col-md-2">
+   			<input type="password" class="form-control" placeholder="Password" name="password" value="" id="password">
+   		</div>
+	</div>
+	<div class= "form-group">
+		<div class="col-md-offset-5 col-md-4">	
+	   		<input class="btn btn-default" type="submit" value="Login">
+		</div>
+	</div>   
+  </form>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  temp
+
+<header id="header">
+<h6> <a href="logout/">logout</a>  </h6>
+</header>  
+<header id="header">
+  <h6> {{firstname}} </h6> <br>
+</header>
+ 
+{% endblock %}
+
+{% block body %}
+
+<form method="POST" class="post-form">{% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary" type="submit">Save</button>
+</form>
+{% endblock %}
