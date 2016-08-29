@@ -6,7 +6,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from .models import Modules, Questions, UserProfile
 import numpy as np
-from .forms import UserProfileForm, QuestionForm, ModuleForm, BuyModuleForm, ExportPDFForm
+from .forms import UserProfileForm, QuestionForm, ModuleForm, BuyModuleForm, ExportPDFForm, ModulesDatesForm
 from reportlab.pdfgen import canvas
 from django.template.loader import get_template
 
@@ -36,11 +36,9 @@ def MakePieChart(request):
         colors = ['#eea236', '#4dbadb', '#d44844']
 
         ax.pie(fracs,
-                  # labels=labels,
                   colors=colors,
                   shadow=False,
                   startangle=90)
-
 
         plt.draw()
         plt.savefig('./main/static/main/user_piecharts/' + username + '.png', bbox_inches='tight')
@@ -92,6 +90,7 @@ def loggedin(request):
                 lastname = Gebruiker.lastname
 
                 form_buy_module_list = []
+                form_dates_module_list = []
                 data_user = UserProfile.objects.all().get(firstname=firstname, lastname=lastname)
                 modules_user = data_user.modules_set.all()
 
@@ -108,16 +107,25 @@ def loggedin(request):
                 				need_save = 1
 
                 for i in range(len(modules_user)):
-                	form_buy_module_list.append(BuyModuleForm(request.POST, auto_id=str(modules_user[i].id_module), prefix=str(modules_user[i].id_module)))
+                    form_buy_module_list.append(BuyModuleForm(request.POST, auto_id=str(modules_user[i].id_module), prefix=str(modules_user[i].id_module)))
+                    dates_form = fill_dates_form(request,modules_user[i], str(modules_user[i].id_module)+'_dates', str(modules_user[i].id_module)+'_dates' )
+                        # form_dates_module_list.append(ModulesDatesForm(request.POST, auto_id=str(modules_user[i].id_module)+'_dates', prefix=str(modules_user[i].id_module)+'_dates'))
+                    form_dates_module_list.append(dates_form)
 
                 if need_save == 1 and to_save.buy_module != 1:
-                	module_temp = to_save
-                	module_temp.status = 'Bezig'
-                	module_temp.buy_module = 1
-                	module_temp.save()
-                	data_user.bank -= module_temp.kosten
-                	data_user.save()
-                	need_save = 0
+                    for i in data_request:
+                        for p in range(len(modules_user)):
+                            if i == str(modules_user[p].id_module)+'-date':
+                                name = str(modules_user[p].id_module)+'-date'
+                                date_to_save = data_request[name]
+                    module_temp = to_save
+                    module_temp.status = 'Bezig'
+                    module_temp.buy_module = 1
+                    module_temp.date = date_to_save
+                    module_temp.save()
+                    data_user.bank -= module_temp.kosten
+                    data_user.save()
+                    need_save = 0
 
                 data_user = UserProfile.objects.all().get(firstname=firstname, lastname=lastname)
                 modules_user = data_user.modules_set.all()
@@ -275,6 +283,8 @@ def loggedin(request):
                 modules = modules_user.modules_set.all()
                 user = Gebruiker
                 form = 'main/loggedin.html' 
+
+                
                 response = {'full_name': username, #'graphic': graphic,
                 			'bank': bank_new,
                 			'firstname':firstname, 'lastname':lastname, 'user':user,
@@ -303,7 +313,9 @@ def loggedin(request):
                             'data_request':data_request,
                 }
                 for i in range(len(form_buy_module_list)):
-                	response['buy_'+str(i)] = form_buy_module_list[i]
+                    response['buy_'+str(i)] = form_buy_module_list[i]
+                    response['dates_'+str(i)] = form_dates_module_list[i]
+
                 return render(request, form, response)
         else:
             page_not_permitted(request)
@@ -721,3 +733,14 @@ def page_not_permitted(request):
     Gebruiker = request.user.userprofile
     response = {'Gebruiker':Gebruiker}
     return render(request, form, response )
+
+def fill_dates_form(request, module, auto_id_given, prefix_given):
+    CHOICES = (
+        ('date1', str(module.date1)),
+        ('date2', str(module.date2)),
+    )
+    # CHOICES = [ ('date1', 'date1'),('date2', 'date2')]
+    form_dates = ModulesDatesForm(initial={ 'dates': CHOICES}, auto_id = auto_id_given, prefix = prefix_given)
+    form_dates.fields['dates'].choices = CHOICES
+
+    return form_dates

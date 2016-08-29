@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
+from django.utils.functional import lazy
+import time, datetime
 
 class UserProfile(models.Model):
         user = models.OneToOneField(User)
@@ -58,6 +60,12 @@ class Modules(models.Model):
                 ('Voltooid', 'Voltooid')
         )
 
+        DATES = (
+                ('1 november 2016', '1 november 2016'),
+                ('1 februari 2016', '1 februari 2016'),
+                ('1 april 2016', '1 april 2016')
+        )
+
         gebied = models.CharField(max_length=50, choices=AREAS, default='studie')
         naam = models.CharField(max_length=50, default="NAAM")
         naam_gebruiker = models.CharField(max_length=50 , default = "NAAM_GEBRUIKER")
@@ -74,8 +82,13 @@ class Modules(models.Model):
         cijfer = models.PositiveIntegerField('Cijfer', default=0 , validators=[MaxValueValidator(10),])
         status = models.CharField(max_length=15, choices=STATUS_MODULES, default='Niet gedaan' )
         id_module = models.CharField(max_length=15, default='' )
-        buy_module = models.PositiveIntegerField('Module kopen', default=0)
+        buy_module = models.PositiveIntegerField('Module kopen', default=0, blank=True)
         exp_required = models.IntegerField('Experience benodigd', default=0)
+        date = models.CharField(max_length=35, choices=DATES, default='1 november 2016')
+
+        #dates
+        date1 = models.DateTimeField(default=datetime.datetime(2016,7,1))
+        date2 = models.DateTimeField(default=datetime.datetime(2016,2,1))
 
         userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
 

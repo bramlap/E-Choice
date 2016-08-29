@@ -1,11 +1,31 @@
+
+    <div class='my-legend' style="position:absolute; top:10; right:5% ; z-index:100; text-align:left ">
+        <div class='legend-scale'>
+            <ul class='legend-labels'>
+            {% if user.weging_stud != 0 %}
+                <li><span style='background:#eea236; z-index:100; text-align;left'></span>Studie</li>
+            {% endif %}
+
+            {% if user.weging_toek != 0 %}
+                <li><span style='background:#4dbadb; z-index:100'></span>Toekomst</li>
+            {% endif %}
+
+            {% if user.weging_soc != 0 %}
+            <li><span style='background:#d44844; z-index:100'></span>Studentleven</li>
+            {% endif %}
+
+            </ul>
+        </div>
+    </div>
+
 <div id="outer">
 
     {% load staticfiles%} 
-        <img src="/static/main/user_piecharts/{{user}}.png?cachebuster={{uuid}" class="img-responsive" style="display:inline-block; width:auto; height:auto; max-width:100%; max-height:100%;"> 
-
+        <img src="/static/main/user_piecharts/{{user}}.png?cachebuster={{uuid}" class="img-responsive" style="display:inline-block; width:auto; height:auto; max-width:100%; max-height:100%; z-index: -1 ; "> 
+<!-- 
         <div style="position:absolute; left:{{x_toek_label}}%; top:{{y_toek_label}}%">
             Toekomst
-        </div>
+        </div> -->
 
     {% if user.weging_stud != 0 %}
 
@@ -77,6 +97,9 @@
 </div>
 
 
+
+
+
 {% for items in modules %}
     <div class="modal fade" style="text-align:left" id="{{items.id_module}}Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <form class="post-form" method="POST">
@@ -96,32 +119,39 @@
                         <br>
                         <br>
 
-                            <table class="table table-condensed">
-                                <thead><tr>
-                                    <!-- <th> Omschrijving <br> <br> </th> -->
-                                    <th> Kosten  </th>
-                                    <th> Baten  (vast) </th>
-                                    {% if items.module_type == 'Actief' %}
-                                    <th> Baten  (Flexibel) </th>
-                                    {% endif %}
-                                    <th> Tijdsduur  </th>
-                                </tr></thead>
-                                <tbody><tr>
-                                    <!-- <td> {{ items.omschrijving}} </td> -->
-                                    <td class='danger'> {{ items.kosten }} </td>
-                                    <td class='success'> {{ items.baten_vast }} </td>
-                                    {% if items.module_type == 'Actief' %}
-                                    <td> (behaalde cijfer voor module) * {{items.factor}} </td>
-                                    {% endif %}
-                                    <td> {{ items.tijd }} uur </td>
-                                </tr></tbody>
-                            </table>
+                        <table class="table table-condensed">
+                            <thead><tr>
+                                <!-- <th> Omschrijving <br> <br> </th> -->
+                                <th> Kosten  </th>
+                                <th> Baten  (vast) </th>
+                                {% if items.module_type == 'Actief' %}
+                                <th> Baten  (Flexibel) </th>
+                                {% endif %}
+                                <th> Tijdsduur  </th>
+                            </tr></thead>
+                            <tbody><tr>
+                                <!-- <td> {{ items.omschrijving}} </td> -->
+                                <td class='danger'> {{ items.kosten }} </td>
+                                <td class='success'> {{ items.baten_vast }} </td>
+                                {% if items.module_type == 'Actief' %}
+                                <td> (behaalde cijfer voor module) * {{items.factor}} </td>
+                                {% endif %}
+                                <td> {{ items.tijd }} uur </td>
+                            </tr></tbody>
+                        </table>
 
 
-                            <div style='display:none;'>
-                                {% csrf_token %}
-                                {% cycle buy_0.as_p buy_1.as_p buy_2.as_p buy_3.as_p buy_4.as_p buy_5.as_p %} 
-                            </div>
+                        <div style='display:none;'>
+                            {% csrf_token %}
+                            {% cycle buy_0.buy_module buy_1.buy_module buy_2.buy_module buy_3.buy_module buy_4.buy_module buy_5.buy_module %} 
+                        </div>
+
+                        Datum:
+                        <br>
+                        <!-- <div style='display:none;'> -->
+                            {% csrf_token %}
+                            {% cycle dates_0 dates_1 dates_2 dates_3 dates_4 dates_5 %} 
+                        <!-- </div> -->
 
                            
                       </div>
@@ -184,7 +214,7 @@
                                         <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
                                     {% elif user.exp_toek < items.exp_required %}
                                         <div style="color:red"> Niet genoeg experience! </div>
-                                        <input class="btn btn-success" type="submit" disabled value="Kopen" />
+                                        <input id="case_kopen" class="btn btn-success" type="submit" disabled value="Kopen" />
                                         <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
                                     {% endif %}
 

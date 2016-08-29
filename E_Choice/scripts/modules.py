@@ -1,26 +1,33 @@
 from main.models import Modules, UserProfile
+from django.db import models
 
 def run():
     users = UserProfile.objects.all()
 
+    DATES_case = (
+                ('1 dec 2016', '1 dec 2016'),
+                ('1 maart 2016', '1 maart 2016'),
+                ('1 mei 2016', '1 mei 2016'),
+    )
+
     for i in users:
         if i.is_student == True:
             p = Modules(
-            gebied='studie',
-            naam_gebruiker=str(i)+': Webklas',
-            naam = 'Webklas',
-            id_module = 'webklas',
-            omschrijving='Online cursus over bepaalde bachelor opleidingen',
-            tijd=16,
-            kosten=240,
-            baten_vast=240,
-            # baten_flex=,
-            experience_vast=192,
-            # experience_flex=,
-            factor=50,
-            module_type = 'Actief',
-            niveau=2,
-            userprofile = i
+                gebied='studie',
+                naam_gebruiker=str(i)+': Webklas',
+                naam = 'Webklas',
+                id_module = 'webklas',
+                omschrijving='Online cursus over bepaalde bachelor opleidingen',
+                tijd=16,
+                kosten=240,
+                baten_vast=240,
+                # baten_flex=,
+                experience_vast=192,
+                # experience_flex=,
+                factor=50,
+                module_type = 'Actief',
+                niveau=2,
+                userprofile = i
             )
             p.save()
 
