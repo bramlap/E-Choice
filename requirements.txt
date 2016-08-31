@@ -1,5 +1,5 @@
 ## Requirements for E-Choice game
-## !!! Note that these requirements need to be for Python3
+# !!! Note that these requirements need to be for Python3
 
 python == 3.4
 Django == 1.9
