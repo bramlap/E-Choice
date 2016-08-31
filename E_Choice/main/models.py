@@ -31,6 +31,8 @@ class UserProfile(models.Model):
         is_student = models.BooleanField(default=True)
         is_teacher = models.BooleanField(default=False)
 
+
+
         # relations bitches
         # modules = models.ForeignKey(Modules, on_delete=models.CASCADE, blank=True, null=True)
         # questions = models.ForeignKey(Questions, on_delete=models.CASCADE, blank=True, null=True)
@@ -85,6 +87,7 @@ class Modules(models.Model):
         buy_module = models.PositiveIntegerField('Module kopen', default=0, blank=True)
         exp_required = models.IntegerField('Experience benodigd', default=0)
         date = models.CharField(max_length=35, choices=DATES, default='1 november 2016')
+        opleiding = models.CharField(max_length=35, default='1 november 2016')
 
         #dates
         date1 = models.DateTimeField(default=datetime.datetime(2016,7,1))
@@ -123,5 +126,27 @@ class Questions(models.Model):
         def __str__(self):
                 return self.naam_question_gebruiker
 
+class Opleidingen(models.Model):
+        userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
+        username = models.CharField(max_length=35, default='Username')
+        naam_opleiding = models.CharField(max_length=35, default='Naam Opleiding')
+        interesse = models.BooleanField(default=False)
+        # naam_module = models.CharField(max_length=50, default="NAAM")
 
+        # date1 = models.CharField(max_length=50, default="DATE1")
+        # date2 = models.CharField(max_length=50, default="DATE2")
+        # date3 = models.CharField(max_length=50, default="DATE3")
 
+        # wiskunde = models.BooleanField(default=False)
+        # natuurkunde = models.BooleanField(default=False)
+        # sterrenkunde = models.BooleanField(default=False)
+        # scheikunde = models.BooleanField(default=False)
+        # biologie = models.BooleanField(default=False)
+        # lst = models.BooleanField(default=False)
+        # farmacie = models.BooleanField(default=False)
+        # informatica = models.BooleanField(default=False)
+        # ki = models.BooleanField(default=False)
+        # tbk = models.BooleanField(default=False)
+
+        def __str__(self):
+                return self.username

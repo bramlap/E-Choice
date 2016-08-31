@@ -4,9 +4,9 @@ from django.contrib import auth
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from .models import Modules, Questions, UserProfile
+from .models import Modules, Questions, UserProfile, Opleidingen
 import numpy as np
-from .forms import UserProfileForm, QuestionForm, ModuleForm, BuyModuleForm, ExportPDFForm, ModulesDatesForm
+from .forms import UserProfileForm, QuestionForm, ModuleForm, BuyModuleForm, ExportPDFForm, ModulesDatesForm, OpleidingKiezenForm
 from reportlab.pdfgen import canvas
 from django.template.loader import get_template
 
@@ -121,7 +121,7 @@ def loggedin(request):
                     module_temp = to_save
                     module_temp.status = 'Bezig'
                     module_temp.buy_module = 1
-                    module_temp.date = date_to_save
+                    # module_temp.date = date_to_save
                     module_temp.save()
                     data_user.bank -= module_temp.kosten
                     data_user.save()
@@ -343,7 +343,7 @@ def weging(request):
             if form_userprofile.is_valid():
                 form_userprofile.save();
                 MakePieChart(request)
-                return HttpResponseRedirect('/loggedin')
+                return HttpResponseRedirect('/#loggedin')
 
             else:
                 form = 'main/weging.html'
@@ -744,3 +744,48 @@ def fill_dates_form(request, module, auto_id_given, prefix_given):
     form_dates.fields['dates'].choices = CHOICES
 
     return form_dates
+
+def opleiding_kiezen(request):
+
+    form = 'main/opleiding_kiezen.html'
+    Gebruiker = request.user.userprofile
+
+    form_opleiding_kiezen = OpleidingKiezenForm()
+
+    if request.method == "POST":
+        data_request = request.POST
+
+        response = {'Gebruiker':Gebruiker, 'form_opleiding_kiezen':form_opleiding_kiezen,
+                    'data_request':data_request,
+        }
+
+        opleidingen = [ 'wiskunde',
+                'natuurkunde',
+                'sterrenkunde',
+                'scheikunde',
+                'biologie',
+                'lst',
+                'farmacie',
+                'informatica',
+                'ki',
+                'tbk',
+        ]
+
+        for i in data_request:
+            for j in opleidingen:
+                if i == j:
+                    p = Opleidingen(
+                        userprofile = request.user.userprofile,
+                        username = str(Gebruiker),
+                        naam_opleiding = str(j),
+                        interesse = True
+                    )
+                    p.save()
+
+        return render(request, form, response )
+
+    else:
+        response = {'Gebruiker':Gebruiker, 'form_opleiding_kiezen':form_opleiding_kiezen,
+        }
+
+        return render(request, form, response )

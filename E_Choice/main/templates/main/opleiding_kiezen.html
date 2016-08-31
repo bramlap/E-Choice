@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+Op welke opleiding wil jij je oriënteren?
+
+<div class="dropdown" style="float: right;     padding-right: 5%;">
+  <button class="dropbtn"> <font size="3"> {{firstname}} {{lastname}}</font> </button>
+<!--   <div class="dropdown-content">
+    <a href="loggedin">  <font size="2">Home</font> </a>
+    <a href="vragen">  <font size="2">Wijzig focus</font> </a>
+    <a href="#"> <font size="2"> Export PDF </font> </a>
+    <a href="logout"/> <font size="2"> Logout </font> </a>
+  </div> -->
+</div>
+
+<style type="text/css">
+body {
+    zoom: 1;
+  -ms-zoom: 1;
+  -webkit-zoom: 1;
+  -moz-transform:  scale(1,1);
+}
+
+</style>
+
+<script type="text/javascript">
+  document.body.style.zoom="110%"
+</script>
+
+{% endblock %}
+
+{% block body %}   
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+
+<!--   <div class="panel panel-default">
+    <div class="panel-body col-md-12 ">
+      <div class="table-responsive"> -->
+
+        <div class="container" style="width:20%">
+        {% crispy form_opleiding_kiezen %}
+        </div>
+
+<!--       </div>
+    </div>
+ </div> -->
+
+
+<!--  <form method="POST" class="post-form">{% csrf_token %}
+  <div class= "col-md-offset-5 col-md-4">
+    <div style='display:none;'>
+    <div>
+      Wiskunde: {{ form_opleiding_kiezen.wiskunde }} <br>
+    </div>
+    {{form_opleiding_kiezen}}
+    Natuurkunde: {{ form_opleiding_kiezen.natuurkunde }} <br>
+    Scheikunde: {{ form_opleiding_kiezen.scheikunde }} <br>
+    Sterrenkunde: {{ form_opleiding_kiezen.sterrenkunde }} <br>
+    </div>
+    <button class="btn btn-primary" type="submit"> Submit </button>
+  </div>
+</form>
+<br> -->
+
+<br>
+
+
+{% endblock %}	

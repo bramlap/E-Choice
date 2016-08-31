@@ -9,4 +9,5 @@ weasyprint >= 0.3
 numpy >= 1.8.2
 matplotlib.pylab >= 1.8.2
 django-extensions == 1.7.2
+django-crispy-forms >= 1.6.2
 

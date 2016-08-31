@@ -5,9 +5,9 @@ def run():
     users = UserProfile.objects.all()
 
     DATES_case = (
-                ('1 dec 2016', '1 dec 2016'),
-                ('1 maart 2016', '1 maart 2016'),
-                ('1 mei 2016', '1 mei 2016'),
+                ('date1', '1 dec 2016'),
+                ('date2', '1 maart 2016'),
+                ('date3', '1 mei 2016'),
     )
 
     for i in users:
