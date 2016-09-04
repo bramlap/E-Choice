@@ -1,17 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
-Wat vind je belangrijk?
+ Wat vind je belangrijk? 
 
-<div class="dropdown" style="float: right;     padding-right: 5%;">
-  <button class="dropbtn"> <font size="3"> {{firstname}} {{lastname}}</font> </button>
-  <div class="dropdown-content">
-  	<a href="loggedin">  <font size="2">Home</font> </a>
-    <a href="vragen">  <font size="2">Wijzig focus</font> </a>
-    <a href="#"> <font size="2"> Export PDF </font> </a>
-    <a href="logout"/> <font size="2"> Logout </font> </a>
-  </div>
-</div>
  
 {% endblock %}
 
@@ -20,10 +11,10 @@ Wat vind je belangrijk?
 <script type="text/javascript">
 var bar, slider;
 function init(){
-	firstname = document.getElementById('id_firstname')
-	firstname.value = "{{firstname}}"
-	lastname = document.getElementById('id_lastname')
-	lastname.value = "{{lastname}}"
+	// firstname = document.getElementById('id_firstname')
+	// firstname.value = "{{firstname}}"
+	// lastname = document.getElementById('id_lastname')
+	// lastname.value = "{{lastname}}"
 
 	// Stud
 	bar_stud = document.getElementById('bar_stud');
@@ -143,9 +134,47 @@ function stopSlide_toek(event){
 
 <body onload='init()'>
 
-<form method="POST" class="post-form">{% csrf_token %}
+<div class="col-md-12" style="top:-25px">
 
-	<div class="container" style="width:50%">
+  <div class="dropdown" style="float: right; padding-right: 5%; color:white">
+    <button class="dropbtn"> <font size="5"> {{Gebruiker.firstname}} {{Gebruiker.lastname}}</font> </button>
+    <div class="dropdown-content">
+    	<a href="main/loggedin" style="color:white">  <font size="2">Home</font> </a>
+      <a href="vragen" style="color:white">  <font size="2">Wijzig focus</font> </a>
+      <a href="pdf_export" style="color:white"> <font size="2"> Export PDF </font> </a>
+      <a href="logout"/ style="color:white"> <font size="2"> Logout </font> </a>
+    </div>
+  </div>
+
+
+  <div class="dropdown" style="float: right;     padding-right: 5%;">
+    <form id = "opleiding_selected" method="post">
+
+        <button class="dropbtn"> <font size="5"> {{Gebruiker.opleiding_selected}} </font> </button>
+        <div class="dropdown-content">
+          {% for i in data_user_opleiding%}
+          <a href="#" style="color:white" onclick="document.forms['opleiding_selected'].submit($('#id_opleiding_selected').val('{{i.opleiding}}'));" id="{{i.opleiding}}">  <font size="2"> {{i.opleiding}} </font> </a>
+          <!-- <a href="" id="{{i.opleiding}}">  <font size="2"> {{i.opleiding}} </font> </a> -->
+          {% endfor %}
+
+          <div style='display:none;'>
+            {% csrf_token %}
+            {{form_opleiding_selected}}
+          </div>
+
+        </div>
+      
+    </form>
+  </div>
+
+</div>
+
+<div class="col-md-12" style="top:25px">
+
+<form method="POST" class="post-form">
+	{% csrf_token %}
+
+	<div class="container" >
 		De volgende stap is om te bedenken op welk(e) gebied(en) jij op dit moment wilt oriënteren. <br>
 		Dit doe je door aandachtsgebieden te wegen op de belangrijkheid, middels sliders!<br>
 		<br>
@@ -178,12 +207,14 @@ function stopSlide_toek(event){
 		</div>
 	
 	<div style='display:none;'>
-		{{ form_userprofile.as_p }}
+		{{ form_userprofile_opleiding.as_p }}
     </div>
     <button class="btn btn-primary" style="margin-left:40%;" type="submit"> Opslaan </button>
 	</div>
 
 </form>
+</div>
+
 
 
 {% endblock %}	

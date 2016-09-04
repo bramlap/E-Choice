@@ -1,7 +1,7 @@
 import sys
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
-from main.models import Modules, UserProfile
+from main.models import UserProfile_General
 
 
 def run():
@@ -35,21 +35,20 @@ def run():
     ]
 
     user_all = User.objects.all()
-    userprofile_all = UserProfile.objects.all()
-
+    userprofile_general_all = UserProfile_General.objects.all()
 
     for i in range(len(user_all)):
         does_exist = False
-        for j in userprofile_all:
+
+        for j in userprofile_general_all:
             if user_all[i] == j: 
                 does_exist = True
 
         if does_exist == False :
-
             for j in range(len(data_user)):
                 if str(user_all[i]) == str(data_user[j][0]):
                     if str(user_all[i]) == 'teacher':
-                        p = UserProfile(
+                        p = UserProfile_General(
                             user        =   user_all[i],
                             firstname   =   str(data_user[j][1]), 
                             lastname    =   str(data_user[j][2]), 
@@ -58,13 +57,14 @@ def run():
                         )
                         p.save()
                     else:
-                        p = UserProfile(
+                        p = UserProfile_General(
                             user        =   user_all[i],
                             firstname   =   str(data_user[j][1]), 
                             lastname    =   str(data_user[j][2]), 
                         )
                         p.save()
-
                     print('OK')
+
+
 
 

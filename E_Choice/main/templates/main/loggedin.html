@@ -1,17 +1,52 @@
 {% extends "base.html" %}
 
 {% block head %}
+
+<div>
   Module Scherm 
 
-<div class="dropdown" style="float: right;     padding-right: 5%;">
-  <button class="dropbtn"> <font size="3"> {{firstname}} {{lastname}}</font> </button>
-  <div class="dropdown-content">
-  	<a href="main/loggedin">  <font size="2">Home</font> </a>
-    <a href="vragen">  <font size="2">Wijzig focus</font> </a>
-    <a href="pdf_export"> <font size="2"> Export PDF </font> </a>
-    <a href="logout"/> <font size="2"> Logout </font> </a>
+<!--   <div class="dropdown" style="float: right;     padding-right: 5%;">
+    <button class="dropbtn"> <font size="3"> {{Gebruiker.firstname}} {{Gebruiker.lastname}}</font> </button>
+    <div class="dropdown-content">
+    	<a href="main/loggedin">  <font size="2">Home</font> </a>
+      <a href="vragen">  <font size="2">Wijzig focus</font> </a>
+      <a href="pdf_export"> <font size="2"> Export PDF </font> </a>
+      <a href="logout"/> <font size="2"> Logout </font> </a>
+    </div>
   </div>
+
+
+  <div class="dropdown" style="float: right;     padding-right: 5%;">
+    <form id = "opleiding_selected" method="post">
+
+        <button class="dropbtn"> <font size="3"> {{Gebruiker.opleiding_selected}} <font> </button>
+        <div class="dropdown-content">
+          {% for i in data_user_opleiding%}
+          <a href="#" onclick="document.forms['opleiding_selected'].submit($('#id_opleiding_selected').val('{{i.opleiding}}'));" id="{{i.opleiding}}">  <font size="2"> {{i.opleiding}} </font> </a>
+          {% endfor %}
+
+          <div style='display:none;'>
+            {% csrf_token %}
+            {{form_opleiding_selected}}
+          </div>
+
+        </div>
+      
+    </form>
+  </div> -->
+
 </div>
+
+
+
+<!-- <div class="dropdown" style="float: right;     padding-right: 5%;">
+  <button class="dropbtn"> <font size="3"> {{Gebruiker.opleiding_selected}} <font> </button>
+  <div class="dropdown-content">
+    {% for i in data_user_opleiding%}
+    <a href="" id="{{i.opleiding}}">  <font size="2"> {{i.opleiding}} </font> </a>
+    {% endfor %}
+  </div>
+</div> -->
  
 <style>
 .button_red {
@@ -85,14 +120,51 @@ $( document ).ready(function() {
 {% endblock %}
 
 {% block body %}
-data_request : {{data_request}} <br>
 
+<!-- data_request : {{data_request}} <br> -->
+<!-- Gebruiker : {{Gebruiker}} <br> -->
+<!-- data_user_opleiding : {{data_user_opleiding}} <br> -->
+<!-- user_selected_opleiding : {{user_selected_opleiding}} <br> -->
+<!-- data_user_selected_opleiding : {{data_user_selected_opleiding}} <br>
+user_modules_opleiding_selected : {{user_modules_opleiding_selected}} <br>
+data_user_selected_opleiding_modules : {{data_user_selected_opleiding_modules}} <br> -->
+<!-- data_request : {{data_request}} -->
 
-<div class="col-md-6">
+<div class="col-md-12" style="top:-25px;">
+  <div class="dropdown" style="float: right; padding-right: 5%; z-index:10">
+    <button class="dropbtn"> <font size="5"> {{Gebruiker.firstname}} {{Gebruiker.lastname}}</font> </button>
+    <div class="dropdown-content">
+      <a href="main/loggedin" style="color:white">  <font size="2">Home</font> </a>
+      <a href="vragen" style="color:white">  <font size="2">Wijzig focus</font> </a>
+      <a href="pdf_export" style="color:white"> <font size="2"> Export PDF </font> </a>
+      <a href="logout"/ style="color:white"> <font size="2"> Logout </font> </a>
+    </div>
+  </div>
+
+  <div class="dropdown" style="float: right; padding-right:5%; z-index:10;">
+    <form id = "opleiding_selected" method="post">
+
+        <button class="dropbtn"> <font size="5"> {{Gebruiker.opleiding_selected}} </font> </button>
+        <div class="dropdown-content">
+          {% for i in data_user_opleiding%}
+          <a href="#" style="color:white" onclick="document.forms['opleiding_selected'].submit($('#id_opleiding_selected').val('{{i.opleiding}}'));" id="{{i.opleiding}}">  <font size="2"> {{i.opleiding}} </font> </a>
+          <!-- <a href="" id="{{i.opleiding}}">  <font size="2"> {{i.opleiding}} </font> </a> -->
+          {% endfor %}
+
+          <div style='display:none;'>
+            {% csrf_token %}
+            {{form_opleiding_selected}}
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<div class="col-md-6" style="top:-20px">
 <div class="panel panel-default">
 	<div class="panel-heading">
     	<h3 class="panel-title">
-    		<div class="tooltip_modules">Modules 
+    		<div class="tooltip_modules" style="z-index:8">Modules {{Gebruiker.opleiding_selected}} 
   				<span class="tooltiptext_modules"> 
   					Hieronder staan de modules voor de aandachtsgebieden weer gegeven. <br>
   					<br>
@@ -112,7 +184,7 @@ data_request : {{data_request}} <br>
 </div>
 </div>
 
-<div class="col-md-6 ">
+<div class="col-md-6" style="top:-20px">
 <div class="panel panel-default ">
 	<div class="panel-heading">
 		<h3 class="panel-title">

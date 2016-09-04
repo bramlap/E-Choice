@@ -14,8 +14,8 @@
 				<th>Type </th>
 				<th>Kosten</th>
 				<th>Baten vast </th>
-				<th>Baten flex.</th>
-				<th>Baten flex. est.*</th>
+<!-- 				<th>Baten flex.</th>
+				<th>Baten flex. est.*</th> -->
 				<th>Status </th>
 				</tr>
 			</thead>
@@ -26,10 +26,16 @@
 						<td class="warning" style ="word-break:break-all;"> {{items.naam}} </td>
 						<td  class="warning"style ="word-break:break-all;"> {{items.module_type}} </td>
 						<td class="warning" style ="word-break:break-all;" > <div style="color:red">{{ items.kosten }} </div> </td>
-						<td class="warning" style ="word-break:break-all;"> <div style="color:green">{{ items.baten_vast }} </div> </td>
-						<td class="warning" style ="word-break:break-all;"> - </td>
+						<td class="warning" style ="word-break:break-all;"> <span style="color:green">{{ items.baten_vast }} </span> 
+
+							{% if items.module_type = "Actief" %}
+								<span style="color:orange"> + {% cycle baten_flex_bezig.0 baten_flex_bezig.1 baten_flex_bezig.2 baten_flex_bezig.3 baten_flex_bezig.4 baten_flex_bezig.5 %}</span>
+							{% endif %}
+
+						 </td>
+<!-- 						<td class="warning" style ="word-break:break-all;"> - </td>
 							
-						<td class="warning" style ="word-break:break-all;"> <div style="color:green">{% cycle baten_flex_bezig.0 baten_flex_bezig.1 baten_flex_bezig.2 baten_flex_bezig.3 baten_flex_bezig.4 baten_flex_bezig.5 %}</div> </td>
+						<td class="warning" style ="word-break:break-all;"> <div style="color:orange">{% cycle baten_flex_bezig.0 baten_flex_bezig.1 baten_flex_bezig.2 baten_flex_bezig.3 baten_flex_bezig.4 baten_flex_bezig.5 %}</div> </td> -->
 						<td class="warning"> {{ items.status }}</td>
 						</tr>
 					{% endif %}
@@ -41,10 +47,15 @@
 							<td  class="success" style ="word-break:break-all;"> {{items.naam}} </td>
 							<td class="success" style ="word-break:break-all;"> {{items.module_type}} </td>
 							<td class="success" style ="word-break:break-all;" > <div style="color:red">{{ items.kosten }} </div> </td>
-							<td class="success" style ="word-break:break-all;"> <div style="color:green">{{ items.baten_vast }} </div> </td>
-							<td class="success" style ="word-break:break-all;"> <div style="color:green">
-									{% cycle baten_flex_voltooid.0 baten_flex_voltooid.1 baten_flex_voltooid.2 baten_flex_voltooid.3 baten_flex_voltooid.4 baten_flex_voltooid.5 %}  </div>  </td>
-							<td class="success" style ="word-break:break-all;"> - </td>
+							<td class="success" style ="word-break:break-all;"> <span style="color:green">{{ items.baten_vast }} </span> 
+
+								{% if items.module_type = "Actief" %}
+									<span style="color:green"> 
+										+ {% cycle baten_flex_voltooid.0 baten_flex_voltooid.1 baten_flex_voltooid.2 baten_flex_voltooid.3 baten_flex_voltooid.4 baten_flex_voltooid.5 %}
+									</span>
+								{% endif %}
+
+							</td>
 							<td class="success"> {{ items.status }}</td>
 						</tr>
 					{% endif %}
@@ -55,8 +66,6 @@
 						<td style ="word-break:break-all;"> <div style="color:red">{{kosten_totaal}} </div> </td>
 						<td style ="word-break:break-all;"> <div style="color:green">{{baten_totaal }} </div> </td>
 						<td style ="word-break:break-all;">  </td>
-						<td> </td>
-						<td> </td>
 					</tr>
 					<tr class="table">
 						<td style ="word-break:break-all;"> Balans </td>
@@ -78,7 +87,7 @@
 			</tbody>
 			
 		</table>
-		* = berekend door: (factor module) x cijfer, waarbij het cijfer een 7.5 is
+<!-- 		* = berekend door: (factor module) x cijfer, waarbij het cijfer een 7.5 is -->
 
 	</div>
 </div>

@@ -11,10 +11,24 @@ Docent pagina
     <a href="logout"/> <font size="2"> Logout </font> </a>
   </div>
 </div>
+
  
 {% endblock %}
 
 {% block body %}
+
+<script>
+function TeacherSelect(){
+	var x = document.getElementById('teacher_filter_opleiding').value;
+	x.innerHTML = document.getElementById('teacher_filter_opleiding').value;
+	y = document.getElementById('id_opleiding_selected')
+	y.value = x ;
+	y.innerHTML = x;
+	z = y.value;
+}
+</script>
+
+<body onload='init()'>
 
 <form method="POST" class="post-form">{% csrf_token %}
 <div class="col-md-3">
@@ -29,19 +43,39 @@ Docent pagina
 	  		{{form_userprofile.lastname}} <br>
 	  		<br> 
 	  		<br>
-	  		<button class="btn btn-primary" type="submit"> Zoeken </button> 
+	  		<button class="btn btn-primary" type="submit"> Scholier zoeken </button> 
 
 	  		{%if error == "True"%}
-	  		<br>
-	  		<br>
-	  		<div style="color:red"> {{message_not_found}} </div>
+		  		<br>
+		  		<br>
+		  		<div style="color:red"> {{message_not_found}} </div>
+		  		{% endif %}
+
+		  		{%if message_found == "True"%}
+		  		<br>
+		  		<br>
+		  		<div style="color:green"> Succesvolle zoekactie! </div>
+		  		<br>
+		  		Filter op opleiding: <br>
+		  		<select id="teacher_filter_opleiding" onchange="TeacherSelect()">
+					{% for i in data_user_opleiding%}
+
+						{% if i.opleiding = teacher_selected%}
+	          				<option value="{{i.opleiding}}" selected > {{i.opleiding}} </option>
+	          			{% else %}
+	          				<option value="{{i.opleiding}}" > {{i.opleiding}} </option>
+	          			{% endif %}
+
+	          		{% endfor %}
+		  		</select>
+				<div style='display:none;'>
+	            		{% csrf_token %}
+	            		{{form_opleiding_selected}}
+	          	</div>
+
+		  		<button class="btn btn-primary" type="submit"> Filter </button> 
 	  		{% endif %}
 
-	  		{%if message_found == "True"%}
-	  		<br>
-	  		<br>
-	  		<div style="color:green"> Succesvolle zoekactie! </div>
-	  		{% endif %}
 	    	
 		</div>
 	</div>

@@ -22,10 +22,10 @@ urlpatterns = [
     url(r'^login', views.login),
     url(r'^logout', views.logout),
     url(r'^loggedin', views.loggedin),
-    url(r'^vragen', views.vragen),
+    # url(r'^vragen', views.vragen),
     url(r'^weging', views.weging),
     url(r'^docent', views.docent),
-    url(r'^pdf_export', views.pdf_export),
-    url(r'^page_not_permitted', views.page_not_permitted),
+    # url(r'^pdf_export', views.pdf_export),
+    # url(r'^page_not_permitted', views.page_not_permitted),
     url(r'^opleiding_kiezen', views.opleiding_kiezen),
 ]

@@ -1,5 +1,5 @@
 
-    <div class='my-legend' style="position:absolute; top:10; right:5% ; z-index:100; text-align:left ">
+    <div class='my-legend' style="position:absolute; top:10; right:5% ; z-index:1; text-align:left ">
         <div class='legend-scale'>
             <ul class='legend-labels'>
             {% if user.weging_stud != 0 %}
@@ -21,7 +21,7 @@
 <div id="outer">
 
     {% load staticfiles%} 
-        <img src="/static/main/user_piecharts/{{user}}.png?cachebuster={{uuid}" class="img-responsive" style="display:inline-block; width:auto; height:auto; max-width:100%; max-height:100%; z-index: -1 ; "> 
+        <img src="/static/main/user_piecharts/{{username}}{{user_selected_opleiding}}.png?cachebuster={{uuid}" class="img-responsive" style="display:inline-block; width:auto; height:auto; max-width:100%; max-height:100%; z-index: -1 ; "> 
 <!-- 
         <div style="position:absolute; left:{{x_toek_label}}%; top:{{y_toek_label}}%">
             Toekomst
@@ -57,7 +57,7 @@
         {% if user.weging_soc != 0 %}
             <button class="button_3" data-toggle="modal" data-target="#dag_studentModal" style="position:absolute; left:{{x_soc_stud}}%; top:{{y_soc_stud}}%; "> 
                 <img class="bottom_stud_soc" src="/static/main/area_images/study_image.jpg" style="position:absolute; width:100%; height:100%;"/>
-                <img class="top_stud_soc" src="/static/main/area_images/working_man.png" style="position:absolute; width:100%; height:100%;" />
+                <img class="top_stud_soc" src="/static/main/area_images/wine3.png" style="position:absolute; width:100%; height:100%;" />
             </button>
         <!-- Dag student  -->
         {% endif %}
@@ -141,17 +141,13 @@
                         </table>
 
 
-                        <div style='display:none;'>
+                        <!-- <div style='display:none;'> -->
                             {% csrf_token %}
                             {% cycle buy_0.buy_module buy_1.buy_module buy_2.buy_module buy_3.buy_module buy_4.buy_module buy_5.buy_module %} 
-                        </div>
+                        <!-- </div> -->
 
                         Datum:
                         <br>
-                        <!-- <div style='display:none;'> -->
-                            {% csrf_token %}
-                            {% cycle dates_0 dates_1 dates_2 dates_3 dates_4 dates_5 %} 
-                        <!-- </div> -->
 
                            
                       </div>
@@ -208,7 +204,6 @@
                                 {% endif %}
 
                                 {% if items.gebied == 'toekomst' %}
-
                                     {% if user.exp_toek >= items.exp_required %}
                                         <input class="btn btn-success" type="submit" value="Kopen" />
                                         <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
@@ -288,8 +283,9 @@
                                 {% endif %}
 
                                 {% if items.gebied == 'toekomst' %}
-
+                                    user.exp_toek : {{user.exp_toek}}
                                     {% if user.exp_toek >= items.exp_required %}
+
                                         <input class="btn btn-success" type="submit" value="Kopen" />
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" value="Sluiten" > </button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close" value="Sluiten" > Sluiten</button>
